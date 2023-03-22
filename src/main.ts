@@ -8,7 +8,7 @@ async function bootstrap(): Promise<void> {
 		origin: '*',
 	});
 	const configService = app.get(ConfigService);
-	const port = configService.get('PORT');
+	const port = process.env.PORT;
 	await app.listen(port || 3001);
 }
 bootstrap();
