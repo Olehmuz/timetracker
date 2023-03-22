@@ -14,7 +14,8 @@ import { UserModule } from './user/user.module';
 			imports: [ConfigModule],
 			inject: [ConfigService],
 			useFactory: async (configService: ConfigService) => ({
-				uri: configService.get<string>('MONGODB_URI'),
+				// uri: configService.get<string>('MONGODB_URI'),
+				uri: process.env.MONGODB_URI,
 			}),
 		}),
 		UserModule,
