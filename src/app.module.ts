@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { AccessTokenGuard } from './common/guards';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -14,13 +16,19 @@ import { UserModule } from './user/user.module';
 			imports: [ConfigModule],
 			inject: [ConfigService],
 			useFactory: async (configService: ConfigService) => ({
-				// uri: configService.get<string>('MONGODB_URI'),
 				uri: process.env.MONGODB_URI,
 			}),
 		}),
 		UserModule,
 	],
+	exports: [UserModule],
 	controllers: [AppController],
-	providers: [AppService],
+	providers: [
+		AppService,
+		{
+			provide: APP_GUARD,
+			useClass: AccessTokenGuard,
+		},
+	],
 })
 export class AppModule {}

@@ -3,22 +3,43 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UserDTO } from './dto/user.dto';
 import { User, UserDocument } from './schemas/user.schema';
-import { ALREADY_EXISTS_GOOGLEID } from './dto/user.constants';
+import { ALREADY_EXISTS_EMAIL, ALREADY_EXISTS_GOOGLEID } from './user.constants';
 
 @Injectable()
 export class UserRepository {
 	constructor(@InjectModel(User.name) private readonly userModel: Model<UserDocument>) {}
 	async create(dto: UserDTO): Promise<UserDocument> {
-		const existingUser = await this.findOneByGoogleId(dto.googleId);
-		if (existingUser) {
+		const existingUserByGoogleId = await this.findOneByGoogleId(dto.googleId);
+		if (existingUserByGoogleId) {
 			throw new BadRequestException(ALREADY_EXISTS_GOOGLEID);
 		}
+		const existingUserByEmail = await this.findOneByEmail(dto.email);
+		if (existingUserByEmail) {
+			throw new BadRequestException(ALREADY_EXISTS_EMAIL);
+		}
+
 		const newUser = new this.userModel({
 			email: dto.email,
 			googleId: dto.googleId,
+			name: dto.name,
+			surname: dto.surname,
+			picture: dto.picture,
 		});
 		return newUser.save();
 	}
+
+	async findOneAndUpdate(
+		filter: Object,
+		data: Object,
+		options?: Object,
+	): Promise<UserDocument | null> {
+		return await this.userModel.findOneAndUpdate(filter, data).exec();
+	}
+
+	async findOneByFilter(filter: Object): Promise<UserDocument | null> {
+		return await this.userModel.findOne(filter).exec();
+	}
+
 	async findOneByGoogleId(googleId: string): Promise<UserDocument | null> {
 		return await this.userModel.findOne({ googleId }).exec();
 	}
