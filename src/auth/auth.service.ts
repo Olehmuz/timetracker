@@ -67,6 +67,30 @@ export class AuthService {
 		return tokens;
 	}
 
+	async loginOrRegister(dto: UserDTO): Promise<Tokens> {
+		let user;
+		try {
+			user = await this.userService.findUserByGoogleId(dto.googleId);
+		} catch (e) {
+			if (e.message === USER_NOT_FOUND) {
+				const newUser = await this.userService.createUser(dto);
+				user = newUser;
+			}
+		}
+
+		const tokens = await this.getTokens(
+			user.googleId,
+			user.email,
+			user.picture,
+			user.name,
+			user.surname,
+			user.id,
+		);
+		await this.hashRT(user.id, tokens.refresh_token);
+
+		return tokens;
+	}
+
 	async singinLocal(dto: UserDTO): Promise<Tokens> {
 		const user = await this.userService.findUserByGoogleId(dto.googleId);
 		if (!user) {

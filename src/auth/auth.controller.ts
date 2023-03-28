@@ -47,6 +47,13 @@ export class AuthController {
 		return this.authService.singinLocal(dto);
 	}
 
+	@Public()
+	@Post('local/google')
+	@HttpCode(HttpStatus.OK)
+	async google(@Body() dto: UserDTO): Promise<Tokens> {
+		return await this.authService.loginOrRegister(dto);
+	}
+
 	@Post('logout')
 	@HttpCode(HttpStatus.OK)
 	logout(@GetCurrentUser('id') id: string): string {
