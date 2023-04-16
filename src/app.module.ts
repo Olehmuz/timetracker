@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { AccessTokenGuard } from './common/guards';
 import { UserModule } from './user/user.module';
+import { TrackerModule } from './tracker/tracker.module';
 
 @Module({
 	imports: [
@@ -20,6 +21,7 @@ import { UserModule } from './user/user.module';
 			}),
 		}),
 		UserModule,
+		TrackerModule,
 	],
 	exports: [UserModule],
 	controllers: [AppController],

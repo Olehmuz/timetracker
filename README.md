@@ -1,73 +1,80 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# ITFIN clone
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Contacts :<br/>
+<a href="mailto:olehmuz87@gmail.com">Email</a><br/>
+<a href="https://t.me/alegmuz" target="_blank">Telegram</a>
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# Stack
 
-## Description
+Tech stack
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+TypeScript, Nest.js, React, Redux toolkit, MongoDB(CosmosDB), Mongoose, Swagger UI, Passport, Jest
 
-## Installation
+Azure Web App, Azure Cosmos DB
 
-```bash
-$ npm install
-```
+<a href="https://itfin-react.azurewebsites.net/" target="_blank">Azure link(Front-end)</a>
+<a href="https://itfin-back.azurewebsites.net/" target="_blank">Azure link(API)</a>
 
-## Running the app
+### Link to front-end Project
+<a href="https://github.com/Olehmuz/timetracker-front-end" target="_blank">ITFIN-clone front-end repository</a>
 
-```bash
-# development
-$ npm run start
+# How to run a project on localhost 
+### To start server
+Install dependencies `npm ci`
+Start with `npm run dev`
+### Environment variable that you have to provide
 
-# watch mode
-$ npm run start:dev
+* PORT : The port on which the application will run
+* MONGODB_URI : MongoDB URI that gives access to your database
+* SECRET_JWT_ACCESS_TOKEN : Secret phrase for your access token
+* SECRET_JWT_REFRESH_TOKEN : Secret phrase for your refresh token
+* SALT : Salt for bcrypt
 
-# production mode
-$ npm run start:prod
-```
+# Decomposition of project tasks
+### Main functionality
 
-## Test
+- [ ] tobecontinue...
 
-```bash
-# unit tests
-$ npm run test
+### Layout 
 
-# e2e tests
-$ npm run test:e2e
+- [ ] Profile page
+- [ ] About page
+- [ ] Tracktime page
+- [x] Header component
 
-# test coverage
-$ npm run test:cov
-```
+### Authorization
+    
+- [x] Backend auth service setup
+    - [x] Refresh token generator
+    - [x] Access token generator
+- [x] Registration , login , logout functionality in auth service
+- [x] Auth routes on server
+- [x] Client-side connection with OAuth
+- [x] Client-side auth handling
+	- [x] axios interceptor setup
+	- [x] Redux toolkit setup
+	- [x] Protected rotes
+### Database
 
-## Support
+- [x] Mongo DB
+- [x] Create Azure Cosmos DB and connect it
+- [x] Mongoose connection (ORM) 
+- [x] User repository logic
+	- [x] Define User schema
+### Tests
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- [x] Jest setup
+- [ ] Tracker alogorithm unit tests
+	- [ ] Vacation calculations 
+	- [ ] Sick leaves calculations 
+	- [ ] Salary calculations 
+- [ ] Postman collection for main API routes
+### Azure
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+- [x] Azure web apps setup
+- [x] Azure Cosmos DB setup
+- [x] Aplication Insights
+- [x] Deploy API to azure
+	- [x] CI/CD for backend
+- [x] Deploy Client-side to azure
+	- [ ] CI/CD for front-end
