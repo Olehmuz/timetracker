@@ -5,6 +5,7 @@ import { UserDTO } from './../user/dto/user.dto';
 import { USER_NOT_FOUND } from './../user/user.constants';
 import { UserService } from './../user/user.service';
 import { Tokens } from './types/tokens.type';
+import { EXPIRE_IN_TIME_ACCESS, EXPIRE_IN_TIME_REFRESH } from './auth.constants';
 
 @Injectable()
 export class AuthService {
@@ -25,14 +26,14 @@ export class AuthService {
 			this.jwtService.sign(
 				{ googleId, email, picture, name, surname, id },
 				{
-					expiresIn: 60 * 15,
+					expiresIn: EXPIRE_IN_TIME_ACCESS,
 					secret: process.env.SECRET_JWT_ACCESS_TOKEN,
 				},
 			),
 			this.jwtService.sign(
 				{ googleId, email, picture, name, surname, id },
 				{
-					expiresIn: 60 * 60 * 24 * 7,
+					expiresIn: EXPIRE_IN_TIME_REFRESH,
 					secret: process.env.SECRET_JWT_REFRESH_TOKEN,
 				},
 			),
