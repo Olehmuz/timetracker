@@ -1,4 +1,4 @@
-import { IsDate, IsDateString, IsNumber, IsString, Max } from 'class-validator';
+import { IsDateString, IsNumber, IsString, Max } from 'class-validator';
 
 export class TrackerDTO {
 	@IsString()

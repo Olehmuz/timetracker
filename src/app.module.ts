@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { AccessTokenGuard } from './common/guards';
 import { UserModule } from './user/user.module';
 import { TrackerModule } from './tracker/tracker.module';
+import { ManagementModule } from './management/management.module';
 
 @Module({
 	imports: [
@@ -22,6 +23,7 @@ import { TrackerModule } from './tracker/tracker.module';
 		}),
 		UserModule,
 		TrackerModule,
+		ManagementModule,
 	],
 	exports: [UserModule],
 	controllers: [AppController],

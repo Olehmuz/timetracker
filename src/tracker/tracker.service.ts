@@ -1,7 +1,5 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { Tracker, TrackerDocument } from './schemas/tracker.schema';
-import { Model } from 'mongoose';
-import { InjectModel } from '@nestjs/mongoose';
+import { Injectable } from '@nestjs/common';
+import { Tracker } from './schemas/tracker.schema';
 import { TrackerDTO } from './dto/tracker.dto';
 import { TrackerRepository } from './tracker.repository';
 
@@ -21,6 +19,11 @@ export class TrackerService {
 		}
 		return this.trackerRepository.insertOne(dto);
 	}
+
+	async getVacationDays(userId: string): Promise<number> {
+		return 1;
+	}
+
 	async getWorkingHoursByDay(dto: TrackerDTO): Promise<number> {
 		const { trackedTime } = await this.trackerRepository.findOne(dto.userId, dto.date);
 		return trackedTime;
