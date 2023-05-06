@@ -3,6 +3,7 @@ import { TrackerService } from './tracker.service';
 import { TrackerDTO } from './dto/tracker.dto';
 import { Tracker } from './schemas/tracker.schema';
 import { Public } from 'src/common/decorators/public.decorator';
+import { TrackerGetDTO } from './dto/tracker-info.dto';
 @Public()
 @Controller('tracker')
 export class TrackerController {
@@ -11,9 +12,8 @@ export class TrackerController {
 	async trackWorkingHours(@Body() dto: TrackerDTO): Promise<Tracker> {
 		return await this.trackerService.trackWorkingHours(dto);
 	}
-
 	@Post('/day')
-	async getWorkingHoursByDay(@Body() dto: TrackerDTO): Promise<number> {
+	async getWorkingHoursByDay(@Body() dto: TrackerGetDTO): Promise<number> {
 		return await this.trackerService.getWorkingHoursByDay(dto);
 	}
 	@Post('/month')

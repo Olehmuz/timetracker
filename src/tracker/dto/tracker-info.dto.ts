@@ -1,6 +1,6 @@
 import { IsDateString, IsString } from 'class-validator';
 
-export class TrackerDTO {
+export class TrackerGetDTO {
 	@IsString()
 	userId: string;
 	@IsDateString()

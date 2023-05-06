@@ -3,6 +3,7 @@ import { Tracker, TrackerDocument } from './schemas/tracker.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { TrackerDTO } from './dto/tracker.dto';
+import moment from 'moment';
 
 @Injectable()
 export class TrackerRepository {
@@ -11,6 +12,7 @@ export class TrackerRepository {
 		if (await this.findOne(dto.userId, dto.date)) {
 			throw new BadRequestException('Working hours for this day have already been tracked.');
 		}
+
 		const newTrackerRecord = new this.trackerModel({
 			userId: dto.userId,
 			date: dto.date,

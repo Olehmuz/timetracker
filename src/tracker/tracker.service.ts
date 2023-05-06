@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Tracker } from './schemas/tracker.schema';
 import { TrackerDTO } from './dto/tracker.dto';
 import { TrackerRepository } from './tracker.repository';
+import { TrackerGetDTO } from './dto/tracker-info.dto';
 
 //GetVacationDays
 //GetMonthLimitByMonth
@@ -24,9 +25,12 @@ export class TrackerService {
 		return 1;
 	}
 
-	async getWorkingHoursByDay(dto: TrackerDTO): Promise<number> {
-		const { trackedTime } = await this.trackerRepository.findOne(dto.userId, dto.date);
-		return trackedTime;
+	async getWorkingHoursByDay(dto: TrackerGetDTO): Promise<number> {
+		const res = await this.trackerRepository.findOne(dto.userId, dto.date);
+		if (!res) {
+			return 0;
+		}
+		return res.trackedTime;
 	}
 	async getWorkingHoursByMonth(userId: string, date: string): Promise<number> {
 		const recordByMonth = await this.trackerRepository.findManyByMonth(userId, date);

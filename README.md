@@ -4,13 +4,14 @@ Contacts :<br/>
 <a href="mailto:olehmuz87@gmail.com">Email</a><br/>
 <a href="https://t.me/alegmuz" target="_blank">Telegram</a>
 
-# Stack
+# Tech Stack
 
-Tech stack
+Front-end: TypeScript, React, Redux toolkit
 
-TypeScript, Nest.js, React, Redux toolkit, MongoDB(CosmosDB), Mongoose, Swagger UI, Passport, Jest
+Back-end: TypeScript, Nest.js, MongoDB(CosmosDB), Mongoose, Swagger UI, Passport, Jest
+TypeScript, Nest.js, MongoDB(CosmosDB), Mongoose, Swagger UI, Passport, Jest
 
-Azure Web App, Azure Cosmos DB
+Azure: Web App, Cosmos DB
 
 <a href="https://itfin-react.azurewebsites.net/" target="_blank">Azure link(Front-end)</a>
 <a href="https://itfin-back.azurewebsites.net/" target="_blank">Azure link(API)</a>
@@ -33,14 +34,19 @@ Start with `npm run dev`
 # Decomposition of project tasks
 ### Main functionality
 
-- [ ] tobecontinue...
-
+- [ ] Tracking system
+- [ ] Salary calculator
+- [ ] Vacation calculator
+- [ ] Project handling
 ### Layout 
 
 - [ ] Profile page
-- [ ] About page
+- [ ] Products page
+- [x] Crew page
+- [x] About page
 - [ ] Tracktime page
 - [x] Header component
+- [ ] Settings page
 
 ### Authorization
     
