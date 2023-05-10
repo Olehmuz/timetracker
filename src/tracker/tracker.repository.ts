@@ -1,47 +1,18 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { Tracker, TrackerDocument } from './schemas/tracker.schema';
-import { Model } from 'mongoose';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { TrackerDTO } from './dto/tracker.dto';
-import moment from 'moment';
+
+import { Model } from 'mongoose';
+
+import { Tracker, TrackerDocument } from './schemas/tracker.schema';
+import { BaseRepository } from 'src/common/baseRepository/base.repository';
 
 @Injectable()
-export class TrackerRepository {
-	constructor(@InjectModel(Tracker.name) private trackerModel: Model<Tracker>) {}
-	async insertOne(dto: TrackerDTO): Promise<Tracker> {
-		if (await this.findOne(dto.userId, dto.date)) {
-			throw new BadRequestException('Working hours for this day have already been tracked.');
-		}
+export class TrackerRepository extends BaseRepository<TrackerDocument> {
+	constructor(@InjectModel(Tracker.name) private trackerModel: Model<TrackerDocument>) {
+		super(trackerModel);
+		console.log(trackerModel);
+	}
 
-		const newTrackerRecord = new this.trackerModel({
-			userId: dto.userId,
-			date: dto.date,
-			trackedTime: dto.trackedTime,
-		});
-		return newTrackerRecord.save();
-	}
-	async updateOne(dto: TrackerDTO): Promise<Tracker> {
-		if (!(await this.findOne(dto.userId, dto.date))) {
-			throw new BadRequestException(
-				'No record of working time tracking for this day was found.',
-			);
-		}
-		const updatedUser = await this.trackerModel
-			.findOneAndUpdate(
-				{
-					userId: dto.userId,
-					date: dto.date,
-				},
-				{
-					trackedTime: dto.trackedTime,
-				},
-				{
-					new: true,
-				},
-			)
-			.exec();
-		return updatedUser;
-	}
 	async findOne(userId: string, date: string): Promise<Tracker | null> {
 		return await this.trackerModel.findOne({ userId, date }).exec();
 	}

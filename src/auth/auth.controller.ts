@@ -1,9 +1,12 @@
-import { Controller, Get, Req, UseGuards, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, UseGuards, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
+
 import { UserDTO } from './../user/dto/user.dto';
 import { AuthService } from './auth.service';
+
+import { Tokens } from './types/tokens.type';
+
 import { GetCurrentUser } from '../common/decorators';
 import { RefreshTokenGuard } from '../common/guards';
-import { Tokens } from './types/tokens.type';
 import { Public } from './../common/decorators/public.decorator';
 
 @Controller('auth')

@@ -1,8 +1,11 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
+
+import { Public } from 'src/common/decorators/public.decorator';
+
 import { ManagementService } from './management.service';
 import { ProjectCreateDTO } from './dto/project-post.dto';
 import { ProjectDocument } from './schemas/project.schema';
-import { Public } from 'src/common/decorators/public.decorator';
+
 @Public()
 @Controller('management')
 export class ManagementController {

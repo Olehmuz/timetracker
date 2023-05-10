@@ -1,11 +1,14 @@
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare, hash } from 'bcrypt';
-import { UserDTO } from './../user/dto/user.dto';
+
 import { USER_NOT_FOUND } from './../user/user.constants';
-import { UserService } from './../user/user.service';
-import { Tokens } from './types/tokens.type';
 import { EXPIRE_IN_TIME_ACCESS, EXPIRE_IN_TIME_REFRESH } from './auth.constants';
+
+import { Tokens } from './types/tokens.type';
+
+import { UserDTO } from './../user/dto/user.dto';
+import { UserService } from './../user/user.service';
 
 @Injectable()
 export class AuthService {

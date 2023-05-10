@@ -1,5 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
+
 import { Tracker } from './schemas/tracker.schema';
+
 import { TrackerDTO } from './dto/tracker.dto';
 import { TrackerRepository } from './tracker.repository';
 import { TrackerGetDTO } from './dto/tracker-info.dto';
@@ -14,19 +16,34 @@ import { TrackerGetDTO } from './dto/tracker-info.dto';
 @Injectable()
 export class TrackerService {
 	constructor(private readonly trackerRepository: TrackerRepository) {}
-	async trackWorkingHours(dto: TrackerDTO): Promise<Tracker> {
-		if (await this.trackerRepository.findOne(dto.userId, dto.date)) {
-			return this.trackerRepository.updateOne(dto);
+	async trackWorkingHours({ userId, date, trackedTime }: TrackerDTO): Promise<Tracker> {
+		const workingHoursByMonth = await this.getWorkingHoursByMonth(userId, date);
+		if (workingHoursByMonth >= 160) {
+			throw new BadRequestException(
+				'You have requested the maximum working hours for this month.',
+			);
 		}
-		return this.trackerRepository.insertOne(dto);
+		if (await this.trackerRepository.findOneByFilter({ userId, date })) {
+			return this.trackerRepository.update(
+				{
+					userId,
+					date,
+				},
+				{
+					trackedTime,
+				},
+			);
+		}
+		return this.trackerRepository.create({
+			userId,
+			date: new Date(date),
+			trackedTime,
+		});
 	}
 
-	async getVacationDays(userId: string): Promise<number> {
-		return 1;
-	}
+	async getWorkingHoursByDay({ userId, date }: TrackerGetDTO): Promise<number> {
+		const res = await this.trackerRepository.findOneByFilter({ userId, date });
 
-	async getWorkingHoursByDay(dto: TrackerGetDTO): Promise<number> {
-		const res = await this.trackerRepository.findOne(dto.userId, dto.date);
 		if (!res) {
 			return 0;
 		}
@@ -39,5 +56,9 @@ export class TrackerService {
 			workingHoursByMonth = recordByMonth.reduce((acc, curr) => acc + curr.trackedTime, 0);
 		}
 		return workingHoursByMonth;
+	}
+
+	async getVacationDays(userId: string): Promise<number> {
+		return 1;
 	}
 }

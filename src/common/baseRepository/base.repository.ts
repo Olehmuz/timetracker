@@ -10,8 +10,8 @@ export abstract class BaseRepository<T extends Document> {
 		return await doc.save();
 	}
 
-	async update(id: string, data: Partial<T>): Promise<T> {
-		return await this.model.findByIdAndUpdate(id, data, { new: true }).exec();
+	async update(fileter: Object, data: Partial<T>): Promise<T> {
+		return await this.model.findOneAndUpdate(fileter, data, { new: true }).exec();
 	}
 
 	async delete(id: string): Promise<T> {

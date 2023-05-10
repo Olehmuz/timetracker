@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { ManagementRepository } from './management.repository';
-import { ProjectCreateDTO } from './dto/project-post.dto';
-import { ProjectDocument } from './schemas/project.schema';
+
 import { PROJECT_ALREADY_EXIST, PROJECT_NOT_FOUND } from './project.constants';
+
+import { ProjectCreateDTO } from './dto/project-post.dto';
+import { ManagementRepository } from './management.repository';
+import { ProjectDocument } from './schemas/project.schema';
 
 @Injectable()
 export class ManagementService {
@@ -16,8 +18,6 @@ export class ManagementService {
 		}
 		return await this.managementRepository.create(dto);
 	}
-	async removeProject() {}
-	async changeProject() {}
 	async getListOfProjects(): Promise<ProjectDocument[]> {
 		return await this.managementRepository.findAll();
 	}
@@ -28,4 +28,6 @@ export class ManagementService {
 		}
 		return project;
 	}
+	// async removeProject() {}
+	// async changeProject() {}
 }

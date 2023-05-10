@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Param, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+
 import { Public } from './../common/decorators/public.decorator';
 import { UserDTO } from './dto/user.dto';
 import { UserDocument } from './schemas/user.schema';
