@@ -2,7 +2,7 @@ import { Body, Controller, Param, Post } from '@nestjs/common';
 import { TrackerService } from './tracker.service';
 import { TrackerDTO } from './dto/tracker.dto';
 import { Tracker } from './schemas/tracker.schema';
-import { Public } from 'src/common/decorators/public.decorator';
+import { Public } from './../common/decorators/public.decorator';
 import { TrackerGetDTO } from './dto/tracker-info.dto';
 @Public()
 @Controller('tracker')
@@ -15,6 +15,10 @@ export class TrackerController {
 	@Post('/day')
 	async getWorkingHoursByDay(@Body() dto: TrackerGetDTO): Promise<number> {
 		return await this.trackerService.getWorkingHoursByDay(dto);
+	}
+	@Post('/week')
+	async getWorkingHoursByWeek(@Body() dto: TrackerGetDTO) {
+		return await this.trackerService.getWorkingHoursByWeek(dto.userId, dto.date);
 	}
 	@Post('/month')
 	async getWorkingHoursByMonth(@Body() dto: { userId: string; date: string }): Promise<number> {

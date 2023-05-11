@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 
-import { Public } from 'src/common/decorators/public.decorator';
+import { Public } from './../common/decorators/public.decorator';
 
 import { ManagementService } from './management.service';
 import { ProjectCreateDTO } from './dto/project-post.dto';

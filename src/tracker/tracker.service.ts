@@ -49,6 +49,11 @@ export class TrackerService {
 		}
 		return res.trackedTime;
 	}
+
+	async getWorkingHoursByWeek(userId: string, date: string) {
+		return await this.trackerRepository.findManyByWeek(userId, date);
+	}
+
 	async getWorkingHoursByMonth(userId: string, date: string): Promise<number> {
 		const recordByMonth = await this.trackerRepository.findManyByMonth(userId, date);
 		let workingHoursByMonth = 0;
