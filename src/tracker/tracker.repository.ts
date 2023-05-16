@@ -5,7 +5,7 @@ import { Model } from 'mongoose';
 
 import { Tracker, TrackerDocument } from './schemas/tracker.schema';
 import { BaseRepository } from './../common/baseRepository/base.repository';
-import { listWeekDays } from 'src/common/listWeekDays/listWeekDays';
+import { listWorkingDays } from 'src/common/listWeekDays/listWeekDays';
 
 @Injectable()
 export class TrackerRepository extends BaseRepository<TrackerDocument> {
@@ -18,7 +18,7 @@ export class TrackerRepository extends BaseRepository<TrackerDocument> {
 	}
 
 	async findManyByWeek(userId: string, date: string): Promise<Tracker[] | null> {
-		const datesOfWeek = listWeekDays(date);
+		const datesOfWeek = listWorkingDays(date);
 		return await this.trackerModel
 			.find({
 				userId,
