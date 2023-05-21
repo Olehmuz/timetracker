@@ -9,12 +9,14 @@ import { Tokens } from './types/tokens.type';
 
 import { UserDTO } from './../user/dto/user.dto';
 import { UserService } from './../user/user.service';
+import { ManagementService } from 'src/management/management.service';
 
 @Injectable()
 export class AuthService {
 	constructor(
 		private readonly userService: UserService,
 		private readonly jwtService: JwtService,
+		private readonly managementService: ManagementService,
 	) {}
 
 	async getTokens(
@@ -78,6 +80,10 @@ export class AuthService {
 		} catch (e) {
 			if (e.message === USER_NOT_FOUND) {
 				const newUser = await this.userService.createUser(dto);
+				this.managementService.setActiveProject({
+					userId: newUser.id,
+					projectId: process.env.DEFAULT_ACTIVE_PROJECT_ID,
+				});
 				user = newUser;
 			}
 		}

@@ -17,15 +17,15 @@ export class TrackerController {
 		return await this.trackerService.getWorkingHoursByDay(dto);
 	}
 	@Post('/week')
-	async getWorkingHoursByWeek(@Body() dto: TrackerGetDTO) {
+	async getWorkingHoursByWeek(@Body() dto: TrackerGetDTO): Promise<number> {
 		return await this.trackerService.getWorkingHoursByWeek(dto.userId, dto.date);
 	}
 	@Post('/week/daylist')
-	async getWorkingDays(@Body() dto: TrackerGetDTO) {
+	async getWorkingDays(@Body() dto: TrackerGetDTO): Promise<Tracker[]> {
 		return await this.trackerService.getWorkingDays(dto.userId, dto.date);
 	}
 	@Post('/week/workingHours')
-	async getMaxWorkingHoursByWeek(@Body() dto: TrackerGetDTO) {
+	async getMaxWorkingHoursByWeek(@Body() dto: TrackerGetDTO): Promise<number> {
 		return await this.trackerService.getMaxWorkingHoursByWeek(dto.userId, dto.date);
 	}
 	@Post('/month')
