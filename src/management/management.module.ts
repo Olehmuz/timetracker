@@ -5,15 +5,20 @@ import { ManagementService } from './management.service';
 import { ManagementController } from './management.controller';
 import { ManagementRepository } from './management.repository';
 import { Project, ProjectSchema } from './schemas/project.schema';
-import { UserProject, UserProjectSchema } from './schemas/user-project.schema';
-import { UserProjectRepository } from './user-project.repository';
+import { UserProfile, UserProjectSchema } from './schemas/userProfile.schema';
+import { UserProfileRepository } from './userProfile.repository';
+import { Position, PositionSchema } from './schemas/position.schema';
+import { UserPosition, UserPositionSchema } from './schemas/user-position.schema';
+import { PositionRepository } from './position.repository';
 
 @Module({
-	providers: [ManagementService, ManagementRepository, UserProjectRepository],
+	providers: [ManagementService, ManagementRepository, UserProfileRepository, PositionRepository],
 	imports: [
 		MongooseModule.forFeature([
 			{ name: Project.name, schema: ProjectSchema },
-			{ name: UserProject.name, schema: UserProjectSchema },
+			{ name: UserProfile.name, schema: UserProjectSchema },
+			{ name: Position.name, schema: PositionSchema },
+			{ name: UserPosition.name, schema: UserPositionSchema },
 		]),
 	],
 	exports: [ManagementService],

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Model, Document } from 'mongoose';
+import { Model, Document, FilterQuery, UpdateQuery } from 'mongoose';
 
 @Injectable()
 export abstract class BaseRepository<T extends Document> {
@@ -10,8 +10,8 @@ export abstract class BaseRepository<T extends Document> {
 		return await doc.save();
 	}
 
-	async update(fileter: Object, data: Partial<T>): Promise<T> {
-		return await this.model.findOneAndUpdate(fileter, data, { new: true }).exec();
+	async update(filter: Object, data: UpdateQuery<T>): Promise<T> {
+		return await this.model.findOneAndUpdate(filter, data, { new: true }).exec();
 	}
 
 	async delete(id: string): Promise<T> {
@@ -22,7 +22,7 @@ export abstract class BaseRepository<T extends Document> {
 		return await this.model.findOneAndUpdate(filter, data).exec();
 	}
 
-	async findOneByFilter(filter: Object): Promise<T | null> {
+	async findOneByFilter(filter: FilterQuery<T>): Promise<T | null> {
 		return await this.model.findOne(filter).exec();
 	}
 

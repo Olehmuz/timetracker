@@ -59,20 +59,6 @@ export class AuthService {
 		return hashedRT;
 	}
 
-	async singupLocal(dto: UserDTO): Promise<Tokens> {
-		const newUser = await this.userService.createUser(dto);
-		const tokens = await this.getTokens(
-			newUser.googleId,
-			newUser.email,
-			newUser.picture,
-			newUser.name,
-			newUser.surname,
-			newUser.id,
-		);
-		await this.hashRT(newUser.id, tokens.refresh_token);
-		return tokens;
-	}
-
 	async loginOrRegister(dto: UserDTO): Promise<Tokens> {
 		let user;
 		try {
@@ -80,10 +66,22 @@ export class AuthService {
 		} catch (e) {
 			if (e.message === USER_NOT_FOUND) {
 				const newUser = await this.userService.createUser(dto);
-				this.managementService.setActiveProject({
-					userId: newUser.id,
-					projectId: process.env.DEFAULT_ACTIVE_PROJECT_ID,
-				});
+
+				await this.managementService.setActiveEntity(
+					{
+						userId: newUser.id,
+						projectId: process.env.DEFAULT_ACTIVE_PROJECT_ID,
+					},
+					'projectId',
+				);
+				await this.managementService.setActiveEntity(
+					{
+						userId: newUser.id,
+						positionId: process.env.DEFAULT_ACTIVE_POSITION_ID,
+					},
+					'positionId',
+				);
+
 				user = newUser;
 			}
 		}
@@ -99,31 +97,6 @@ export class AuthService {
 		await this.hashRT(user.id, tokens.refresh_token);
 
 		return tokens;
-	}
-
-	async singinLocal(dto: UserDTO): Promise<Tokens> {
-		const user = await this.userService.findUserByGoogleId(dto.googleId);
-		if (!user) {
-			throw new NotFoundException(USER_NOT_FOUND);
-		}
-		const tokens = await this.getTokens(
-			user.googleId,
-			user.email,
-			user.picture,
-			user.name,
-			user.surname,
-			user.id,
-		);
-		await this.hashRT(user.id, tokens.refresh_token);
-
-		return tokens;
-	}
-
-	async logout(id: string): Promise<void> {
-		await this.userService.findOneByAndUpdate(
-			{ _id: id, hashedRT: { $ne: null } },
-			{ hashedRT: null },
-		);
 	}
 
 	async refreshTokens(id: string, rt: string): Promise<Tokens> {
@@ -150,11 +123,50 @@ export class AuthService {
 		return tokens;
 	}
 
+	async logout(id: string): Promise<void> {
+		await this.userService.findOneByAndUpdate(
+			{ _id: id, hashedRT: { $ne: null } },
+			{ hashedRT: null },
+		);
+	}
+
 	async validateUser(googleId: string, email: string): Promise<any> {
 		const user = await this.userService.findUserByGoogleId(googleId);
 		if (user && user.email === email) {
 			return user;
 		}
 		return null;
+	}
+
+	async singinLocal(dto: UserDTO): Promise<Tokens> {
+		const user = await this.userService.findUserByGoogleId(dto.googleId);
+		if (!user) {
+			throw new NotFoundException(USER_NOT_FOUND);
+		}
+		const tokens = await this.getTokens(
+			user.googleId,
+			user.email,
+			user.picture,
+			user.name,
+			user.surname,
+			user.id,
+		);
+		await this.hashRT(user.id, tokens.refresh_token);
+
+		return tokens;
+	}
+
+	async singupLocal(dto: UserDTO): Promise<Tokens> {
+		const newUser = await this.userService.createUser(dto);
+		const tokens = await this.getTokens(
+			newUser.googleId,
+			newUser.email,
+			newUser.picture,
+			newUser.name,
+			newUser.surname,
+			newUser.id,
+		);
+		await this.hashRT(newUser.id, tokens.refresh_token);
+		return tokens;
 	}
 }

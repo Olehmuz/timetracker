@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { FilterQuery } from 'mongoose';
 
 import {
 	ACTIVE_PROJECT_NOT_FOUND,
@@ -6,18 +7,23 @@ import {
 	PROJECT_NOT_FOUND,
 } from './project.constants';
 
-import { ProjectCreateDTO } from './dto/project-post.dto';
-import { ManagementRepository } from './management.repository';
 import { ProjectDocument } from './schemas/project.schema';
-import { UserProjectRepository } from './user-project.repository';
-import { UserProjectDTO } from './dto/user-project.dto';
-import { UserProjectDocument } from './schemas/user-project.schema';
+import { PositionDocument } from './schemas/position.schema';
+import { UserProfileDocument } from './schemas/userProfile.schema';
+
+import { ManagementRepository } from './management.repository';
+import { UserProfileRepository } from './userProfile.repository';
+import { PositionRepository } from './position.repository';
+
+import { PositionCreateDTO } from './dto/position.dto';
+import { ProjectCreateDTO } from './dto/project-post.dto';
 
 @Injectable()
 export class ManagementService {
 	constructor(
 		private readonly managementRepository: ManagementRepository,
-		private readonly userProjectRepository: UserProjectRepository,
+		private readonly userProfileRepository: UserProfileRepository,
+		private readonly positionRepository: PositionRepository,
 	) {}
 	async createProject(dto: ProjectCreateDTO): Promise<ProjectDocument> {
 		const existedProject = await this.managementRepository.findOneByFilter({
@@ -28,9 +34,31 @@ export class ManagementService {
 		}
 		return await this.managementRepository.create(dto);
 	}
+
+	async createPosition(dto: PositionCreateDTO): Promise<PositionDocument> {
+		const existedProject = await this.managementRepository.findOneByFilter({
+			projectName: dto.positionName,
+		});
+		if (existedProject) {
+			throw new Error(PROJECT_ALREADY_EXIST);
+		}
+		return await this.positionRepository.create(dto);
+	}
+
+	// async createActiveProfile<T extends { userId: string }>(dto: T): Promise<UserProfileDocument> {
+	// 	const userProfile = await this.userProfileRepository.findOneByFilter({
+	// 		userId: dto.userId,
+	// 	});
+	// 	if (userProfile) {
+	// 		throw new Error(PROJECT_ALREADY_EXIST);
+	// 	}
+	// 	return await this.userProfileRepository.create(dto);
+	// }
+
 	async getListOfProjects(): Promise<ProjectDocument[]> {
 		return await this.managementRepository.findAll();
 	}
+
 	async getProject(projectId: string): Promise<ProjectDocument> {
 		const project = await this.managementRepository.findById(projectId);
 		if (!project) {
@@ -39,23 +67,36 @@ export class ManagementService {
 		return project;
 	}
 
-	async setActiveProject(dto: UserProjectDTO): Promise<UserProjectDocument> {
-		if (await this.userProjectRepository.findOneByFilter({ userId: dto.userId })) {
-			return await this.userProjectRepository.update(
+	async setActiveEntity<DTO extends { userId: string }>(
+		dto: DTO,
+		entityKey: string,
+	): Promise<UserProfileDocument> {
+		if (await this.userProfileRepository.findOneByFilter({ userId: dto.userId })) {
+			return await this.userProfileRepository.update(
 				{ userId: dto.userId },
-				{ projectId: dto.projectId },
+				{ [entityKey]: dto[entityKey] },
 			);
 		}
-		return await this.userProjectRepository.create(dto);
+		return await this.userProfileRepository.create(dto);
 	}
 
-	async getActiveProject(userId: string): Promise<UserProjectDocument> {
-		const activeProject = await this.userProjectRepository.findOneByFilter({ userId });
-		if (!activeProject) {
+	async getActiveEntity<Doc>(
+		entityKey: string,
+		repositryName: string,
+		filter: FilterQuery<Doc>,
+	): Promise<Doc> {
+		const entity = await this.userProfileRepository.findOneByFilter(filter);
+		const activeEntity = (await this[repositryName].findById(entity[entityKey])) as Doc;
+		if (!activeEntity) {
 			throw new Error(ACTIVE_PROJECT_NOT_FOUND);
 		}
-		return activeProject;
+		return activeEntity;
 	}
+
+	async getListOfEntites<Doc>(repositoryName: string): Promise<Doc[]> {
+		return (await this[repositoryName].findAll()) as Doc[];
+	}
+
 	// async removeProject() {}
 	// async changeProject() {}
 }

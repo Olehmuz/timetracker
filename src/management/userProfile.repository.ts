@@ -3,12 +3,13 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { BaseRepository } from '../common/baseRepository/base.repository';
-import { UserProject, UserProjectDocument } from './schemas/user-project.schema';
+
+import { UserProfile, UserProfileDocument } from './schemas/userProfile.schema';
 
 @Injectable()
-export class UserProjectRepository extends BaseRepository<UserProjectDocument> {
+export class UserProfileRepository extends BaseRepository<UserProfileDocument> {
 	constructor(
-		@InjectModel(UserProject.name) private readonly projectModel: Model<UserProjectDocument>,
+		@InjectModel(UserProfile.name) private readonly projectModel: Model<UserProfileDocument>,
 	) {
 		super(projectModel);
 	}
