@@ -7,10 +7,10 @@ moment.updateLocale('en', {
 });
 
 export const listWorkingDays = (date: string): Date[] => {
-	const month = moment(date).month();
-	const monday = moment(date).clone().startOf('week').add(1, 'day');
-	const sunday = moment(date).clone().endOf('week');
-
+	const month = moment.utc(date).month();
+	const monday = moment.utc(date).clone().startOf('week');
+	const sunday = moment.utc(date).clone().endOf('week');
+	// console.log(monday);
 	const datesOfWeek = [] as Date[];
 
 	for (let i = 0; i <= 6; i++) {

@@ -9,6 +9,7 @@ import { AccessTokenGuard } from './common/guards';
 import { UserModule } from './user/user.module';
 import { TrackerModule } from './tracker/tracker.module';
 import { ManagementModule } from './management/management.module';
+import { PayslipModule } from './payslip/payslip.module';
 
 @Module({
 	imports: [
@@ -24,6 +25,7 @@ import { ManagementModule } from './management/management.module';
 		UserModule,
 		TrackerModule,
 		ManagementModule,
+		PayslipModule,
 	],
 	exports: [UserModule],
 	controllers: [AppController],

@@ -3,6 +3,7 @@ import { FilterQuery } from 'mongoose';
 
 import {
 	ACTIVE_PROJECT_NOT_FOUND,
+	PROFILE_NOT_FOUND,
 	PROJECT_ALREADY_EXIST,
 	PROJECT_NOT_FOUND,
 } from './project.constants';
@@ -17,6 +18,8 @@ import { PositionRepository } from './position.repository';
 
 import { PositionCreateDTO } from './dto/position.dto';
 import { ProjectCreateDTO } from './dto/project-post.dto';
+import { GradeDTO } from './dto/grade.dto';
+import { Grades } from './types/grades.type';
 
 @Injectable()
 export class ManagementService {
@@ -65,6 +68,28 @@ export class ManagementService {
 			throw new Error(PROJECT_NOT_FOUND);
 		}
 		return project;
+	}
+
+	async getGrade(userId: string): Promise<Grades> {
+		const profile = await this.userProfileRepository.findOneByFilter({ userId });
+		if (!profile) {
+			throw new Error(PROFILE_NOT_FOUND);
+		}
+		return profile.grade;
+	}
+
+	async setGrade(dto: GradeDTO): Promise<UserProfileDocument> {
+		const profile = await this.userProfileRepository.findOneByFilter({ userId: dto.userId });
+		if (!profile) {
+			throw new Error(PROFILE_NOT_FOUND);
+		}
+		if (profile.grade === dto.grade) {
+			return profile;
+		}
+		return await this.userProfileRepository.update(
+			{ userId: dto.userId },
+			{ grade: dto.grade },
+		);
 	}
 
 	async setActiveEntity<DTO extends { userId: string }>(

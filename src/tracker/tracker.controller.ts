@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { TrackerService } from './tracker.service';
 import { TrackerDTO } from './dto/tracker.dto';
 import { Tracker } from './schemas/tracker.schema';
@@ -31,6 +31,10 @@ export class TrackerController {
 	@Post('/month')
 	async getWorkingHoursByMonth(@Body() dto: { userId: string; date: string }): Promise<number> {
 		return await this.trackerService.getWorkingHoursByMonth(dto.userId, dto.date);
+	}
+	@Get('/vacation/:userId')
+	async getVacationDays(@Param('userId') userId: string) {
+		return await this.trackerService.getVacationDays(userId);
 	}
 }
 

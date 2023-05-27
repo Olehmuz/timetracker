@@ -97,6 +97,17 @@ export class TrackerService {
 	}
 
 	async getVacationDays(userId: string): Promise<number> {
-		return 1;
+		const startOfYear = moment.utc('2023-01-01').format();
+		const endOfYear = moment.utc('2023-12-31').format();
+		const recordsByYear = await this.trackerRepository.findManyByFilter({
+			userId,
+			date: { $gte: startOfYear, $lte: endOfYear },
+		});
+
+		const vacationDaysPerMonth = +process.env.VACATION_DAYS_PER_MONTH;
+		const vacationDaysPerHour = vacationDaysPerMonth / 160;
+		const workingHoursByYear = recordsByYear.reduce((acc, curr) => acc + curr.trackedTime, 0);
+
+		return workingHoursByYear * vacationDaysPerHour;
 	}
 }

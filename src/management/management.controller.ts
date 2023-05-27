@@ -10,6 +10,7 @@ import { UserProfileDocument } from './schemas/userProfile.schema';
 import { PositionCreateDTO, UserPositionDTO } from './dto/position.dto';
 import { UserPositionDocument } from './schemas/user-position.schema';
 import { PositionDocument } from './schemas/position.schema';
+import { GradeDTO } from './dto/grade.dto';
 
 @Public()
 @Controller('management')
@@ -33,6 +34,16 @@ export class ManagementController {
 	@Post('setActivePosition')
 	async setActivePosition(@Body() dto: UserPositionDTO): Promise<UserProfileDocument> {
 		return await this.managementService.setActiveEntity(dto, 'positionId');
+	}
+
+	@Post('setGrade')
+	async setGrade(@Body() dto: GradeDTO): Promise<UserProfileDocument> {
+		return await this.managementService.setGrade(dto);
+	}
+
+	@Get('getGrade/:userId')
+	async getGrade(@Param('userId') userId: string): Promise<string> {
+		return await this.managementService.getGrade(userId);
 	}
 
 	@Get('getActiveProject/:userId')

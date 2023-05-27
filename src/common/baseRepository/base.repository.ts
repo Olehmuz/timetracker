@@ -26,6 +26,10 @@ export abstract class BaseRepository<T extends Document> {
 		return await this.model.findOne(filter).exec();
 	}
 
+	async findManyByFilter(filter: FilterQuery<T>): Promise<T[]> {
+		return await this.model.find(filter).exec();
+	}
+
 	async findAll(): Promise<T[]> {
 		return await this.model.find({}).exec();
 	}
