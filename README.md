@@ -1,6 +1,7 @@
 # ITFIN clone
 
 Contacts :<br/>
+Oleh Muzychuk<br/>
 <a href="mailto:olehmuz87@gmail.com">Email</a><br/>
 <a href="https://t.me/alegmuz" target="_blank">Telegram</a>
 
@@ -15,6 +16,8 @@ Azure: Web App, Cosmos DB
 
 <a href="https://itfin-react.azurewebsites.net/" target="_blank">Azure link(Front-end)</a>
 <a href="https://itfin-back.azurewebsites.net/" target="_blank">Azure link(API)</a>
+
+<a href="https://miro.com/app/board/uXjVMAa76Ek=/?share_link_id=503285943783" target="_blank">Description of the architecture and infrastructure used in the project.</a>
 
 ### Link to front-end Project
 <a href="https://github.com/Olehmuz/timetracker-front-end" target="_blank">ITFIN-clone front-end repository</a>
@@ -34,19 +37,16 @@ Start with `npm run dev`
 # Decomposition of project tasks
 ### Main functionality
 
-- [ ] Tracking system
-- [ ] Salary calculator
-- [ ] Vacation calculator
-- [ ] Project handling
+- [x] Tracking system
+- [x] Salary calculator
+- [x] Vacation calculator
 ### Layout 
 
-- [ ] Profile page
-- [ ] Products page
+- [x] Profile page
 - [x] Crew page
 - [x] About page
-- [ ] Tracktime page
+- [x] Tracktime page
 - [x] Header component
-- [ ] Settings page
 
 ### Authorization
     
@@ -66,15 +66,15 @@ Start with `npm run dev`
 - [x] Create Azure Cosmos DB and connect it
 - [x] Mongoose connection (ORM) 
 - [x] User repository logic
-	- [x] Define User schema
+- [x] Base repository
 ### Tests
 
 - [x] Jest setup
-- [ ] Tracker alogorithm unit tests
-	- [ ] Vacation calculations 
-	- [ ] Sick leaves calculations 
-	- [ ] Salary calculations 
-- [ ] Postman collection for main API routes
+- [x] Tracker alogorithm unit tests
+	- [x] Vacation calculations 
+	- [x] Sick leaves calculations 
+	- [x] Salary calculations 
+- [x] Postman collection for main API routes
 ### Azure
 
 - [x] Azure web apps setup
@@ -83,4 +83,4 @@ Start with `npm run dev`
 - [x] Deploy API to azure
 	- [x] CI/CD for backend
 - [x] Deploy Client-side to azure
-	- [ ] CI/CD for front-end
+	- [x] CI/CD for front-end

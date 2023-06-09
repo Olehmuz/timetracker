@@ -33,14 +33,7 @@ export class TrackerController {
 		return await this.trackerService.getWorkingHoursByMonth(dto.userId, dto.date);
 	}
 	@Get('/vacation/:userId')
-	async getVacationDays(@Param('userId') userId: string) {
+	async getVacationDays(@Param('userId') userId: string): Promise<number> {
 		return await this.trackerService.getVacationDays(userId);
 	}
 }
-
-//GetVacationDays
-//GetMonthLimitByMonth
-//GetTrackedTimeByMonth
-//GetTrackedTimeByDay
-//setTrackedTimeOnDay
-//patchTrackedTimeOnDay

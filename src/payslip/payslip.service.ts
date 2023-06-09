@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { ManagementService } from 'src/management/management.service';
 import { PositionDocument } from 'src/management/schemas/position.schema';
 import { ProjectDocument } from 'src/management/schemas/project.schema';
-import { TrackerService } from 'src/tracker/tracker.service';
 
 @Injectable()
 export class PayslipService {
