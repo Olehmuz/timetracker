@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { ManagementService } from 'src/management/management.service';
-import { PositionDocument } from 'src/management/schemas/position.schema';
-import { ProjectDocument } from 'src/management/schemas/project.schema';
+import { ManagementService } from './../management/management.service';
+import { PositionDocument } from './../management/schemas/position.schema';
+import { ProjectDocument } from './../management/schemas/project.schema';
 
 @Injectable()
 export class PayslipService {
@@ -15,19 +15,19 @@ export class PayslipService {
 			'positionRepository',
 			filter,
 		);
-
 		const activeProjectPromise = this.managementService.getActiveEntity<ProjectDocument>(
 			'projectId',
 			'managementRepository',
 			filter,
 		);
 
+		console.log(activePositionPromise, activeProjectPromise);
 		const [activePosition, activeProject, grade] = await Promise.all([
 			activePositionPromise,
 			activeProjectPromise,
 			gradePromise,
 		]);
-
+		console.log(activePosition, activeProject);
 		return activePosition.salary[grade] * 0.4 + activeProject.salary[grade] * 0.6;
 	}
 }

@@ -8,13 +8,6 @@ import { TrackerGetDTO } from './dto/tracker-info.dto';
 import { listWeekDays, listWeekDaysOfCurrentMonth } from 'src/common/listWeekDays/listWeekDays';
 import * as moment from 'moment';
 
-//GetVacationDays
-//GetMonthLimitByMonth
-//GetTrackedTimeByMonth
-//GetTrackedTimeByDay
-//setTrackedTimeOnDay
-//patchTrackedTimeOnDay
-
 @Injectable()
 export class TrackerService {
 	constructor(private readonly trackerRepository: TrackerRepository) {}
@@ -107,7 +100,7 @@ export class TrackerService {
 		const vacationDaysPerMonth = +process.env.VACATION_DAYS_PER_MONTH;
 		const vacationDaysPerHour = vacationDaysPerMonth / 160;
 		const workingHoursByYear = recordsByYear.reduce((acc, curr) => acc + curr.trackedTime, 0);
-
-		return workingHoursByYear * vacationDaysPerHour;
+		const vacationDays = workingHoursByYear * vacationDaysPerHour;
+		return vacationDays;
 	}
 }

@@ -33,6 +33,9 @@ Start with `npm run dev`
 * SECRET_JWT_ACCESS_TOKEN : Secret phrase for your access token
 * SECRET_JWT_REFRESH_TOKEN : Secret phrase for your refresh token
 * SALT : Salt for bcrypt
+* DEFAULT_ACTIVE_PROJECT_ID: Default active project id
+* DEFAULT_ACTIVE_POSITION_ID: Default active position id
+* VACATION_DAYS_PER_MONTH: Count of vacation days given by month
 
 # Decomposition of project tasks
 ### Main functionality
