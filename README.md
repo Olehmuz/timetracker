@@ -10,7 +10,6 @@ Oleh Muzychuk<br/>
 Front-end: TypeScript, React, Redux toolkit
 
 Back-end: TypeScript, Nest.js, MongoDB(CosmosDB), Mongoose, Swagger UI, Passport, Jest
-TypeScript, Nest.js, MongoDB(CosmosDB), Mongoose, Swagger UI, Passport, Jest
 
 Azure: Web App, Cosmos DB
 
